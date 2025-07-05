@@ -1,0 +1,27 @@
+{
+  "name": "effect",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+        "Shared": {
+            "$className":"Folder",
+
+            "Effect": {
+                "$path":"src/Effect"
+            }
+        }
+    },
+    "ServerScriptService": {
+      "Test": {
+        "$path":"src/Tests/TestServer.server.luau"
+      }
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts":{
+        "Test":{
+          "$path":"src/Tests/TestClient.client.luau"
+        }
+      }
+    }
+  }
+}
