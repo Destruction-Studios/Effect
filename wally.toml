@@ -7,3 +7,4 @@ realm = "shared"
 [dependencies]
 Signal = "sleitnick/signal@2.0.3"
 Trove = "sleitnick/trove@1.5.1"
+UniqueKey = "destruction-studios/uniquekey@x"
