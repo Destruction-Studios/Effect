@@ -6,6 +6,8 @@ export type Context = {
 }
 
 export type Reply = {
+	TimesFired: (self: Reply) -> number,
+
 	LimitedTo: (self: Reply, amount: number) -> Reply,
 	Once: (self: Reply) -> Reply,
 	RateLimitedTo: (self: Reply, seconds: number) -> Reply,
