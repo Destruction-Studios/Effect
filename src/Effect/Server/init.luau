@@ -71,6 +71,8 @@ function EffectClass:Run(...: any)
 	end
 
 	table.clear(self._runArgs)
+
+	return self
 end
 
 function EffectClass:OnRun(func: (...any) -> nil)

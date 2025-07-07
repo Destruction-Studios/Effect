@@ -27,7 +27,7 @@ function Reply.new(signal, func)
 	return self
 end
 
-function Reply:LimtedTo(limit)
+function Reply:LimitedTo(limit)
 	self._fireLimit = limit
 	return self
 end
@@ -50,11 +50,15 @@ function Reply:OnlyFrom(playerOrPlayers: Player | { Player })
 	return self
 end
 
-function Reply:Destroy()
+function Reply:Disconnect()
 	if self.Connection and self.Connection.Connected then
 		self.Connection:Disconnect()
 		self.Connection = nil
 	end
+end
+
+function Reply:Destroy()
+	self:Disconnect()
 end
 
 return Reply

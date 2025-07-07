@@ -23,10 +23,10 @@ local function getOrCreateEffect(name, id)
 	if class._objects[id] ~= nil then
 		return class._objects[id]
 	end
-	class._objects[id] = {
-		Id = id,
+	class._objects[id] = setmetatable({
+		_id = id,
 		Name = name,
-	}
+	}, EffectObject)
 	startNoYield(class.Start, class._objects[id])
 	return class._objects[id]
 end
@@ -56,9 +56,13 @@ function EffectClientMT.RunPrimary(self, context: ContextType, ...) end
 --selene:allow(unused_variable)
 function EffectClientMT.Destroy(self) end
 
+function EffectObject:GetId()
+	return self._id
+end
+
 Network:InitRemotes()
 
-function EffectClient:Start()
+function EffectClient.start()
 	assert(not started, `Effect has already been started`)
 	started = true
 
