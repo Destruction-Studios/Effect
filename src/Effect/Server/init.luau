@@ -15,6 +15,12 @@ local EffectServer = {}
 local EffectClass = {}
 EffectClass.__index = EffectClass
 
+function EffectServer.run(name: string, ...: any)
+	local effect = EffectServer.new(name)
+	effect:Run(...)
+	effect:Destroy()
+end
+
 function EffectServer.new(name: string)
 	local self = setmetatable({}, EffectClass)
 
