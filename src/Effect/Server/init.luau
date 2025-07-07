@@ -22,6 +22,7 @@ function EffectServer.run(name: string, ...: any)
 end
 
 function EffectServer.new(name: string)
+	assert(typeof(name) == "string", `Expected string got {typeof(name)}`)
 	local self = setmetatable({}, EffectClass)
 
 	currentId += 1
@@ -73,6 +74,7 @@ function EffectClass:Run(...: any)
 end
 
 function EffectClass:OnRun(func: (...any) -> nil)
+	assert(typeof(func) == "function", `Expected function got {typeof(func)}`)
 	local connection = nil
 
 	connection = self._onRun:Connect(func)
@@ -85,14 +87,17 @@ function EffectClass:OnRun(func: (...any) -> nil)
 end
 
 function EffectClass:WithPrimary(primary: Player)
+	assert(typeof(primary) == "Instance" and primary:IsA("Player"), `Expected Player got {typeof(primary)}`)
 	self._runArgs.Primary = primary
 
 	return self
 end
 
 function EffectClass:WithOnly(playerOrPlayers: Player | { Player })
-	if typeof(playerOrPlayers) ~= "table" then
+	if typeof(playerOrPlayers) ~= "table" and typeof(playerOrPlayers) == "Instance" then
 		playerOrPlayers = { playerOrPlayers }
+	elseif typeof(playerOrPlayers) ~= "table" and typeof(playerOrPlayers) ~= "Instance" then
+		error(string.format("Expected {Player} or Player got %s", typeof(playerOrPlayers)), 2)
 	end
 
 	self._runArgs.Only = playerOrPlayers
@@ -101,6 +106,7 @@ function EffectClass:WithOnly(playerOrPlayers: Player | { Player })
 end
 
 function EffectClass:OnReply(func: (player: Player, ...any) -> nil)
+	assert(typeof(func) == "function", `Expected function got {typeof(func)}`)
 	if self._replyConnection == nil then
 		local con = Network:GetRemote(Network.REMOTES.REPLY).OnServerEvent:Connect(function(player, name, id, ...)
 			if not self._firedTo[player] then

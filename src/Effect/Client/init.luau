@@ -1,7 +1,3 @@
-export type EffectParams = {
-	Name: string,
-}
-
 local started = false
 local effectClasses = {}
 
@@ -35,14 +31,15 @@ local function getOrCreateEffect(name, id)
 	return class._objects[id]
 end
 
-function EffectClient.new(params: EffectParams)
-	assert(not effectClasses[params.Name], `Effect {params.Name} already exists`)
+function EffectClient.new(name: string)
+	assert(typeof(name) == "string", `Expected string got {typeof(name)}`)
+	assert(not effectClasses[name], `Effect {name} already exists`)
 	local self = setmetatable({}, EffectClientMT)
 
-	self.Name = params.Name
+	self.Name = name
 	self._objects = {}
 
-	effectClasses[params.Name] = self
+	effectClasses[name] = self
 
 	return self
 end
