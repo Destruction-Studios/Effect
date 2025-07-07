@@ -50,9 +50,6 @@ function EffectClientMT.Run(self, context: ContextType, ...) end
 function EffectClientMT.RunPrimary(self, context: ContextType, ...) end
 
 --selene:allow(unused_variable)
-function EffectClientMT.RunAfter(self, context: ContextType, ...) end
-
---selene:allow(unused_variable)
 function EffectClientMT.Destroy(self) end
 
 Network:InitRemotes()
@@ -76,9 +73,7 @@ function EffectClient:Start()
 			else
 				local context = Context.new(effectName, id, Network:GetRemote(Network.REMOTES.REPLY))
 				local effect = getOrCreateEffect(effectName, id)
-				if remoteName == Network.REMOTES.RUN_AFTER then
-					class.RunAfter(effect, context, ...)
-				elseif remoteName == Network.REMOTES.RUN_PRIMARY then
+				if remoteName == Network.REMOTES.RUN_PRIMARY then
 					class.RunPrimary(effect, context, ...)
 				end
 				class.Run(effect, context, ...)

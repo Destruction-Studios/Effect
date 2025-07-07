@@ -4,7 +4,6 @@ local FOLDER_NAME = "_remotes"
 local REMOTES = {
 	RUN = "RunEffect",
 	RUN_PRIMARY = "RunEffectPrimary",
-	RUN_AFTER = "RunEffectAfter",
 	EFFECT_DESTROY = "EffectDestroyed",
 	REPLY = "Reply",
 }
