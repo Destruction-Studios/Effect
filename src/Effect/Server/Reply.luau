@@ -27,6 +27,10 @@ function Reply.new(signal, func)
 	return self
 end
 
+function Reply:TimesFired()
+	return self._timesFired
+end
+
 function Reply:LimitedTo(limit)
 	self._fireLimit = limit
 	return self
