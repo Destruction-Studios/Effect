@@ -9,6 +9,9 @@ assert(game:GetService("RunService"):IsClient(), `Can not be run on server`)
 
 local Network = require(script.Parent.Network).new(script.Parent)
 local Context = require(script.Context)
+local noYield = require(script.Parent.noYield)
+
+local startNoYield = noYield("Attempted to yield in start function")
 
 export type ContextType = typeof(Context.new())
 
@@ -28,6 +31,7 @@ local function getOrCreateEffect(name, id)
 		Id = id,
 		Name = name,
 	}
+	startNoYield(class.Start, class._objects[id])
 	return class._objects[id]
 end
 
@@ -42,6 +46,9 @@ function EffectClient.new(params: EffectParams)
 
 	return self
 end
+
+--selene:allow(unused_variable)
+function EffectClientMT.Start(self) end
 
 --selene:allow(unused_variable)
 function EffectClientMT.Run(self, context: ContextType, ...) end
@@ -69,6 +76,9 @@ function EffectClient:Start()
 				local effect = class._objects[id]
 				if effect then
 					class.Destroy(effect)
+					setmetatable(effect, nil)
+					table.clear(effect)
+					class._objects[id] = nil
 				end
 			else
 				local context = Context.new(effectName, id, Network:GetRemote(Network.REMOTES.REPLY))

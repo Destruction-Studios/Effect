@@ -16,12 +16,8 @@ function ContextMT:GetName(): string
 	return self._name
 end
 
-function ContextMT:GetId(): number
-	return self._id
-end
-
 function ContextMT:Reply(...)
-	self._replyEvent:FireServer(self:GetName(), self:GetId(), ...)
+	self._replyEvent:FireServer(self:GetName(), self._id, ...)
 end
 
 return Context

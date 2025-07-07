@@ -129,4 +129,7 @@ end
 
 Network:InitRemotes()
 
+--To prevent no OnServerEvent impl error
+Network:GetRemote(Network.REMOTES.REPLY).OnServerEvent:Connect(function() end)
+
 return EffectServer
