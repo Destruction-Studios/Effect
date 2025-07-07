@@ -8,6 +8,7 @@ local Context = require(script.Context)
 local noYield = require(script.Parent.noYield)
 
 local startNoYield = noYield("Attempted to yield in start function")
+local contextModiferNoYield = noYield("Attempted to yeild in context modifier")
 
 export type ContextType = typeof(Context.new())
 
@@ -62,7 +63,7 @@ end
 
 Network:InitRemotes()
 
-function EffectClient.start()
+function EffectClient.start(contextModifier)
 	assert(not started, `Effect has already been started`)
 	started = true
 
@@ -83,6 +84,11 @@ function EffectClient.start()
 				end
 			else
 				local context = Context.new(effectName, id, Network:GetRemote(Network.REMOTES.REPLY))
+
+				if contextModifier then
+					contextModiferNoYield(contextModifier, context)
+				end
+
 				local effect = getOrCreateEffect(effectName, id)
 				if remoteName == Network.REMOTES.RUN_PRIMARY then
 					class.RunPrimary(effect, context, ...)
